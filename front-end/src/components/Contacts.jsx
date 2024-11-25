@@ -96,89 +96,112 @@ export default function Contacts({ socket, currentUser }) {
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 10% 75% 15%;
+  grid-template-rows: 15% 70% 15%;
   overflow: hidden;
-  background: rgb(0,181,255);
-  background: radial-gradient(circle, rgba(0,181,255,1) 3%, rgba(0,174,245,1) 9%, rgba(43,49,49,1) 100%);
+  background: linear-gradient(135deg, #00b4db, #0083b0);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3);
+
   .brand {
     display: flex;
     align-items: center;
     gap: 1rem;
     justify-content: center;
     img {
-      height: 2rem;
+      height: 2.5rem;
     }
     h3 {
       color: white;
       text-transform: uppercase;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      font-weight: bold;
     }
   }
+
   .contacts {
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: auto;
-    gap: 0.8rem;
-    margin-top: 2rem;
+    overflow-y: auto;
+    gap: 1rem;
+    padding: 1rem;
+    margin-top: 1rem;
     &::-webkit-scrollbar {
-      width: 0.2rem;
+      width: 0.5rem;
       &-thumb {
-        background-color: #ffffff39;
-        width: 0.1rem;
-        border-radius: 1rem;
+        background-color: #ffffff60;
+        border-radius: 0.5rem;
       }
     }
+
     .contact {
-      background-color: #ffffff34;
+      background-color: rgba(255, 255, 255, 0.2);
       min-height: 5rem;
       cursor: pointer;
-      width: 90%;
-      border-radius: 0.2rem;
-      padding: 0.4rem;
+      width: 85%;
+      border-radius: 1rem;
+      padding: 1rem;
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
       align-items: center;
-      transition: 0.5s ease-in-out;
-      .avatar {
-        img {
-          height: 3rem;
-        }
+      transition: 0.3s ease-in-out;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+      .avatar img {
+        height: 3rem;
+        border-radius: 50%;
+        border: 2px solid white;
       }
-      .username {
-        h3 {
-          color: white;
-        }
+
+      .username h3 {
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+        background-color: #0073a6;
       }
     }
+
     .selected {
-      background-color: #008cc5;
+      background-color: #0073a6;
+      transform: scale(1.05);
+    }
+
+    p {
+      color: white;
+      font-size: 1.2rem;
+      margin-top: 2rem;
     }
   }
 
   .current-user {
-    background-color: #008cc5;
-    padding: 2rem 0;
+    background-color: rgba(0, 140, 197, 0.8);
+    padding: 1.5rem;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 1rem;
-    .avatar {
-      img {
-        height: 3.4rem;
-        max-inline-size: 100%;
-      }
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+
+    .avatar img {
+      height: 4rem;
+      border-radius: 50%;
+      border: 2px solid white;
     }
-    .username {
-      h2 {
-        color: white;
-      }
+
+    .username h2 {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
     }
+
     @media screen and (min-width: 720px) and (max-width: 1080px) {
       gap: 0.5rem;
-      .username {
-        h2 {
-          font-size: 1rem;
-        }
+      .username h2 {
+        font-size: 1rem;
       }
     }
   }
