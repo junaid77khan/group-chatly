@@ -41,12 +41,19 @@ module.exports.register = async (req, res, next) => {
 
 module.exports.getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find({ _id: { $ne: req.params.id } }).select([
+    const connectedUserIds = Array.from(global.onlineUsers.keys()); // Get the online user IDs
+
+    if (connectedUserIds.length === 0) {
+      return res.json({ msg: "No users are currently online" });
+    }
+
+    const users = await User.find({ _id: { $in: connectedUserIds } }).select([
       "email",
       "username",
       "avatarImage",
       "_id",
     ]);
+
     return res.json(users);
   } catch (ex) {
     next(ex);

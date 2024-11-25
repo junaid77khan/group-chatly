@@ -1,21 +1,37 @@
 const Messages = require("../models/messageModel");
+const User = require("../models/userModel");
 
 module.exports.getMessages = async (req, res, next) => {
   try {
-    const { from, to } = req.body;
+    const { from } = req.body;
 
-    const messages = await Messages.find({
-      users: {
-        $all: [from, to],
-      },
-    }).sort({ updatedAt: 1 });
+    if (!from) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const messages = await Messages.find().populate({
+      path: 'sender',
+      select: 'username avatarImage email _id'
+    }).sort({ createdAt: 1 });
 
     const projectedMessages = messages.map((msg) => {
+      // Add a safety check in case population fails
+      if (!msg.sender) {
+        return null;
+      }
+      
       return {
-        fromSelf: msg.sender.toString() === from,
+        fromSelf: msg.sender._id.toString() === from,
         message: msg.message.text,
+        sender: {
+          _id: msg.sender._id,
+          username: msg.sender.username,
+          avatar: msg.sender.avatarImage,
+          email: msg.sender.email
+        }
       };
-    });
+    }).filter(msg => msg !== null);
+
     res.json(projectedMessages);
   } catch (ex) {
     next(ex);
@@ -24,16 +40,20 @@ module.exports.getMessages = async (req, res, next) => {
 
 module.exports.addMessage = async (req, res, next) => {
   try {
-    const { from, to, message } = req.body;
+    const { from, message } = req.body;
+
     const data = await Messages.create({
-      message: { text: message },
-      users: [from, to],
-      sender: from,
+      message: { text: message },  
+      sender: from,              
     });
 
-    if (data) return res.json({ msg: "Message added successfully." });
-    else return res.json({ msg: "Failed to add message to the database" });
+    if (data) {
+      return res.json({ msg: "Message added successfully." });
+    } else {
+      return res.json({ msg: "Failed to add message to the database" });
+    }
   } catch (ex) {
-    next(ex);
+    next(ex);  
   }
 };
+

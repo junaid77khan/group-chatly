@@ -1,25 +1,52 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
+import { allUsersRoute } from "../utils/APIRoutes";
+import axios from "axios";
 
-export default function Contacts({ contacts, changeChat }) {
+export default function Contacts({ socket, currentUser }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
-  useEffect(async () => {
-    const data = await JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-    );
-    setCurrentUserName(data.username);
-    setCurrentUserImage(data.avatarImage);
-  }, []);
-  const changeCurrentChat = (index, contact) => {
-    setCurrentSelected(index);
-    changeChat(contact);
+  const [contacts, setContacts] = useState([]);
+
+  const fetchContacts = async () => {
+    const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+    console.log(data);
+    
+    setContacts(data.data);
   };
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY));
+    if (data) {
+      setCurrentUserName(data.username);
+      setCurrentUserImage(data.avatarImage);
+    }
+    fetchContacts();
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      const handleUserAdded = () => {
+        fetchContacts();
+      };
+      const handleUserRemoved = () => {
+        fetchContacts();
+      };
+
+      socket.on("user-added", handleUserAdded);
+      socket.on("user-removed", handleUserRemoved);
+
+      return () => {
+        socket.off("user-added", handleUserAdded);
+      };
+    }
+  }, [socket, fetchContacts]);
+
   return (
     <>
-      {currentUserImage && currentUserImage && (
+      {currentUserImage && currentUserName && (
         <Container>
           <div className="current-user">
             <div className="avatar">
@@ -33,27 +60,29 @@ export default function Contacts({ contacts, changeChat }) {
             </div>
           </div>
           <div className="contacts">
-            {contacts.map((contact, index) => {
-              return (
-                <div
-                  key={contact._id}
-                  className={`contact ${
-                    index === currentSelected ? "selected" : ""
-                  }`}
-                  onClick={() => changeCurrentChat(index, contact)}
-                >
-                  <div className="avatar">
-                    <img
-                      src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-                      alt=""
-                    />
-                  </div>
-                  <div className="username">
-                    <h3>{contact.username}</h3>
-                  </div>
-                </div>
-              );
-            })}
+            <h1>Online users</h1>
+            {(Array.isArray(contacts) && contacts.length > 0) ? (
+              contacts.map((contact, index) => {
+                return (
+                  (contact._id != currentUser._id && <div
+                    key={contact._id}
+                    className={`contact ${index === currentSelected ? "selected" : ""}`}
+                  >
+                    <div className="avatar">
+                      <img
+                        src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+                        alt=""
+                      />
+                    </div>
+                    <div className="username">
+                      <h3>{contact.username}</h3>
+                    </div>
+                  </div>)
+                );
+              })
+            ) : (
+              <p>No online users</p>
+            )}
           </div>
           <div className="brand">
             <img className="logo1" src={Logo} alt="logo" />
@@ -64,6 +93,7 @@ export default function Contacts({ contacts, changeChat }) {
     </>
   );
 }
+
 const Container = styled.div`
   display: grid;
   grid-template-rows: 10% 75% 15%;
