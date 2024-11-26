@@ -101,9 +101,7 @@ const FormContainer = styled.div`
   gap: 1rem;
   align-items: center;
   background: url('https://imgs.search.brave.com/cp3OEplyW_DQcyon3MO9ScspkCIK9sYgBBaudnapySs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvNzMz/MTU4MS5qcGc');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+ 
   padding: 2rem 1rem;
 
   .brand {
