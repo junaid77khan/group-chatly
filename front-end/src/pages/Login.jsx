@@ -55,7 +55,6 @@ export default function Login() {
           process.env.REACT_APP_LOCALHOST_KEY,
           JSON.stringify(data.user)
         );
-
         navigate("/");
       }
     }
@@ -104,6 +103,8 @@ const FormContainer = styled.div`
   background: url('https://imgs.search.brave.com/cp3OEplyW_DQcyon3MO9ScspkCIK9sYgBBaudnapySs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvNzMz/MTU4MS5qcGc');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  padding: 2rem 1rem;
 
   .brand {
     display: flex;
@@ -111,36 +112,39 @@ const FormContainer = styled.div`
     gap: 1rem;
     justify-content: center;
     img {
-      height: 5rem;
+      height: 4rem;
+      border-radius: 50%;
+      max-width: 100%;
     }
     h1 {
-      color: #4015ff;
+      color: #ffffff;
       text-transform: uppercase;
+      font-size: 2rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
   }
 
   form {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 2rem;
-    padding: 4rem 3rem;
-    width: 90%;
+    gap: 1.5rem;
+    background-color: transparent;
+    border-radius: 1.5rem;
+    padding: 3rem 2rem;
+    width: 100%;
     max-width: 400px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   }
 
   input {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #ffffff;
     padding: 1rem;
-    border: 0.1rem solid #4015ff;
+    border: 1px solid #4015ff;
     border-radius: 1rem;
-    color: black;
+    color: #333;
     width: 100%;
     font-size: 1rem;
     &:focus {
-      border: 0.1rem solid #100;
+      border-color: #100;
       outline: none;
     }
   }
@@ -155,6 +159,7 @@ const FormContainer = styled.div`
     border-radius: 1rem;
     font-size: 1rem;
     text-transform: uppercase;
+    transition: background-color 0.3s ease;
     &:hover {
       background-color: #4e0eff;
     }
@@ -162,7 +167,9 @@ const FormContainer = styled.div`
 
   span {
     color: #fff;
+    text-align: center;
     text-transform: uppercase;
+    font-size: 0.9rem;
     a {
       color: #4015ff;
       text-decoration: none;
@@ -170,39 +177,54 @@ const FormContainer = styled.div`
     }
   }
 
-  @media (max-width: 768px) {
-    .brand img {
-      height: 4rem;
-    }
+  @media screen and (max-width: 768px) {
     .brand h1 {
       font-size: 1.5rem;
     }
+
     form {
-      padding: 3rem 2rem;
+      padding: 2rem 1.5rem;
+      width: 90%;
+      max-width: 350px;
     }
+
+    input {
+      padding: 0.8rem;
+    }
+
     button {
-      font-size: 0.9rem;
       padding: 0.8rem 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    span {
+      font-size: 0.8rem;
     }
   }
 
-  @media (max-width: 480px) {
-    .brand img {
-      height: 3rem;
-    }
+  @media screen and (max-width: 480px) {
     .brand h1 {
       font-size: 1.2rem;
     }
+
     form {
-      padding: 2rem 1.5rem;
-      gap: 1.5rem;
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 300px;
     }
-    button {
-      font-size: 0.8rem;
-      padding: 0.7rem 1rem;
-    }
+
     input {
+      padding: 0.8rem;
       font-size: 0.9rem;
+    }
+
+    button {
+      padding: 0.7rem 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    span {
+      font-size: 0.7rem;
     }
   }
 `;

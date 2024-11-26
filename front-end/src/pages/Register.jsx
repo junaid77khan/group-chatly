@@ -118,7 +118,7 @@ export default function Register() {
           />
           <button type="submit">Create Account</button>
           <span>
-            Already have an account ? <Link to="/login">Login.</Link>
+            Already have an account? <Link to="/login">Login.</Link>
           </span>
         </form>
       </FormContainer>
@@ -137,8 +137,11 @@ const FormContainer = styled.div`
   align-items: center;
   position: absolute;
   z-index: -1;
+  background: url('https://imgs.search.brave.com/cp3OEplyW_DQcyon3MO9ScspkCIK9sYgBBaudnapySs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvNzMz/MTU4MS5qcGc');
+  background-size: cover;
+  background-position: center;
   
- background: url('https://imgs.search.brave.com/cp3OEplyW_DQcyon3MO9ScspkCIK9sYgBBaudnapySs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvNzMz/MTU4MS5qcGc'); .brand {
+  .brand {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -152,6 +155,7 @@ const FormContainer = styled.div`
       text-transform: uppercase;
     }
   }
+
   form {
     display: flex;
     flex-direction: column;
@@ -159,7 +163,10 @@ const FormContainer = styled.div`
     background-color: transparent;
     border-radius: 2rem;
     padding: 3rem 5rem;
+    max-width: 500px;
+    width: 100%;
   }
+
   input {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 1rem;
@@ -173,6 +180,7 @@ const FormContainer = styled.div`
       outline: none;
     }
   }
+
   button {
     background-color: #4015ff;
     color: white;
@@ -183,11 +191,9 @@ const FormContainer = styled.div`
     border-radius: 1rem;
     font-size: 1rem;
     text-transform: uppercase;
-    transition: .2s all ease;
-    // &:hover {
-    //   background-color: #6200ff;
-    // }
+    transition: 0.2s all ease;
   }
+
   span {
     color: white;
     text-transform: uppercase;
@@ -195,6 +201,63 @@ const FormContainer = styled.div`
       color: #4015ff;
       text-decoration: none;
       font-weight: bold;
+    }
+  }
+
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    .brand {
+      gap: 0.5rem;
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    form {
+      padding: 2rem 3rem;
+    }
+
+    input {
+      font-size: 0.9rem;
+    }
+
+    button {
+      font-size: 0.9rem;
+      padding: 0.8rem 1.5rem;
+    }
+
+    span {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .brand {
+      gap: 0.2rem;
+      img {
+        height: 4rem;
+      }
+      h1 {
+        font-size: 1.2rem;
+      }
+    }
+
+    form {
+      padding: 1.5rem 2rem;
+    }
+
+    input {
+      font-size: 0.8rem;
+      padding: 0.8rem;
+    }
+
+    button {
+      font-size: 0.8rem;
+      padding: 0.8rem 1.2rem;
+    }
+
+    span {
+      font-size: 0.8rem;
     }
   }
 `;

@@ -4,6 +4,8 @@ const User = require("../models/userModel");
 module.exports.login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    console.log(req.body);
+    
     const user = await User.findOne({ username });
     if (!user)
       return res.json({ msg: "Incorrect Username or Password", status: false });

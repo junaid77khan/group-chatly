@@ -51,9 +51,7 @@ const ChatInput = ({ handleSendMsg }) => {
           {showEmojiPicker && (
             <div className="emoji-picker-wrapper">
               <Picker 
-                onEmojiClick={(emojiObject) => {
-                  handleEmojiClick(emojiObject);
-                }} 
+                onEmojiClick={(emojiObject) => handleEmojiClick(emojiObject)} 
                 height={350}
                 width={300}
               />
@@ -79,14 +77,18 @@ const ChatInput = ({ handleSendMsg }) => {
 const Container = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: 5% 95%;
+  grid-template-columns: 10% 90%; /* Adjust for responsiveness */
   background-color: #008CC5;
   padding: 0.5rem 1rem;
   border-radius: 14px;
-  
-  @media screen and (min-width: 320px) and (max-width: 480px) {
-    grid-template-columns: 10% 90%;
-    padding: 0.3rem 0.6rem;
+  position: fixed;
+  bottom: 7px;
+  width: 100%;
+  z-index: 1000;
+
+  @media screen and (max-width: 480px) {
+    grid-template-columns: 15% 85%; /* Adjust for small screens */
+    padding: 0.5rem 0.6rem;
   }
 
   .button-container {
@@ -131,7 +133,7 @@ const Container = styled.div`
     background-color: white;
     border-radius: 2rem;
     position: relative;
-    padding-right: 50px; // Space for send button
+    padding-right: 60px; 
 
     input {
       flex-grow: 1;
@@ -156,9 +158,9 @@ const Container = styled.div`
     }
 
     button {
-      position: sticky;
-      bottom: 0;
-      z-index: 100;
+      position: absolute;
+      right: 0;
+      top: 50%;
       transform: translateY(-50%);
       display: flex;
       justify-content: center;
@@ -182,7 +184,6 @@ const Container = styled.div`
 
       @media screen and (max-width: 480px) {
         height: 35px;
-
         svg {
           font-size: 1.2rem;
         }
