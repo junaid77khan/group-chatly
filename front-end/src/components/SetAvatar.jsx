@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { setAvatarRoute } from "../utils/APIRoutes";
+
 export default function SetAvatar() {
   const api = `https://api.multiavatar.com/4645646`;
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ export default function SetAvatar() {
     setAvatars(data);
     setIsLoading(false);
   }, []);
+
   return (
     <>
       {isLoading ? (
@@ -79,14 +81,12 @@ export default function SetAvatar() {
             {avatars.map((avatar, index) => {
               return (
                 <div
-                  className={`avatar ${
-                    selectedAvatar === index ? "selected" : ""
-                  }`}
+                  className={`avatar ${selectedAvatar === index ? "selected" : ""}`}
+                  key={index}
                 >
                   <img
                     src={`data:image/svg+xml;base64,${avatar}`}
                     alt="avatar"
-                    key={avatar}
                     onClick={() => setSelectedAvatar(index)}
                   />
                 </div>
@@ -120,11 +120,16 @@ const Container = styled.div`
   .title-container {
     h1 {
       color: white;
+      font-size: 1.5rem;
+      text-align: center;
     }
   }
+
   .avatars {
     display: flex;
     gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
 
     .avatar {
       border: 0.4rem solid transparent;
@@ -139,10 +144,12 @@ const Container = styled.div`
         transition: 0.5s ease-in-out;
       }
     }
+
     .selected {
       border: 0.4rem solid #4e0eff;
     }
   }
+
   .submit-btn {
     background-color: #4e0eff;
     color: white;
@@ -157,4 +164,41 @@ const Container = styled.div`
       background-color: #4e0eff;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .title-container h1 {
+      font-size: 1.2rem;
+    }
+
+    .avatars {
+      gap: 1rem;
+    }
+
+    .avatar img {
+      height: 5rem;
+    }
+
+    .submit-btn {
+      padding: 0.8rem 1.5rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .title-container h1 {
+      font-size: 1rem;
+    }
+
+    .avatars {
+      gap: 0.8rem;
+    }
+
+    .avatar img {
+      height: 4.5rem;
+    }
+
+    .submit-btn {
+      padding: 0.6rem 1.2rem;
+    }
+  }
 `;
+

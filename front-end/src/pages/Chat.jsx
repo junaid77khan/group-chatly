@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import styled from "styled-components";
 import { allUsersRoute, host } from "../utils/APIRoutes";
 import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
+import loader from "../assets/loader.gif"; // Import the loader gif
 
 export default function Chat() {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ export default function Chat() {
           </>
         ) : (
           <div className="loader">
-            <div className="spinner"></div>
+            <img src={loader} alt="loading" className="loader-img" />
             <h2>Loading Environment</h2>
           </div>
         )}
@@ -81,30 +82,19 @@ const Container = styled.div`
     gap: 1rem;
     color: white;
     width: 100vw;
-    background: rgb(0,181,255);
-    background: radial-gradient(circle, rgba(0,181,255,1) 3%, rgba(0,174,245,1) 9%, rgba(43,49,49,1) 100%);
+    height: 100vh;
+    background: #131324;
+    ${'' /* background: radial-gradient(circle, rgba(0,181,255,1) 3%, rgba(0,174,245,1) 9%, rgba(43,49,49,1) 100%); */}
 
     h2 {
       font-size: 1.5rem;
       font-weight: 500;
     }
 
-    .spinner {
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      border-top: 4px solid #ffffff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+    .loader-img {
+      max-inline-size: 100%;
+      max-block-size: 50px;
     }
   }
 `;
+
