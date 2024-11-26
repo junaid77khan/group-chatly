@@ -102,6 +102,9 @@ const FormContainer = styled.div`
   gap: 1rem;
   align-items: center;
   background: url('https://imgs.search.brave.com/cp3OEplyW_DQcyon3MO9ScspkCIK9sYgBBaudnapySs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvNzMz/MTU4MS5qcGc');
+  background-size: cover;
+  background-position: center;
+
   .brand {
     display: flex;
     align-items: center;
@@ -120,10 +123,14 @@ const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 2rem;
-    padding: 5rem;
+    padding: 4rem 3rem;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   }
+
   input {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 1rem;
@@ -137,6 +144,7 @@ const FormContainer = styled.div`
       outline: none;
     }
   }
+
   button {
     background-color: #4015ff;
     color: white;
@@ -151,6 +159,7 @@ const FormContainer = styled.div`
       background-color: #4e0eff;
     }
   }
+
   span {
     color: #fff;
     text-transform: uppercase;
@@ -158,6 +167,42 @@ const FormContainer = styled.div`
       color: #4015ff;
       text-decoration: none;
       font-weight: bold;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .brand img {
+      height: 4rem;
+    }
+    .brand h1 {
+      font-size: 1.5rem;
+    }
+    form {
+      padding: 3rem 2rem;
+    }
+    button {
+      font-size: 0.9rem;
+      padding: 0.8rem 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .brand img {
+      height: 3rem;
+    }
+    .brand h1 {
+      font-size: 1.2rem;
+    }
+    form {
+      padding: 2rem 1.5rem;
+      gap: 1.5rem;
+    }
+    button {
+      font-size: 0.8rem;
+      padding: 0.7rem 1rem;
+    }
+    input {
+      font-size: 0.9rem;
     }
   }
 `;
