@@ -17,7 +17,6 @@ export default function ChatContainer({ socket }) {
   
       try {
         const response = await axios.post(recieveMessageRoute, { from: data._id });
-        console.log(response);
         setMessages(response.data);  
       } catch (error) {
         console.error("Error fetching messages: ", error);
@@ -29,8 +28,10 @@ export default function ChatContainer({ socket }) {
   
   const handleSendMsg = async (msg) => {
     const data = await JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY));
+    console.log(data);
+    
     const messageData = {
-      from: data._id,
+      from: data,
       message: msg,
     };
      
@@ -46,10 +47,11 @@ export default function ChatContainer({ socket }) {
   useEffect(() => {
     if (socket) {
       const handleMessage = (msg) => {
+        
         setArrivalMessage({ 
           fromSelf: false, 
           message: msg.message,
-          sender: msg.sender
+          sender: msg.from
         });
       };
       socket.on("msg-recieve", handleMessage);
@@ -77,16 +79,20 @@ export default function ChatContainer({ socket }) {
         <Logout socket={socket}/>
       </div>
       <div className="chat-messages">
-        {messages.map((message) => {
+        {messages.map((message, index) => {
           const content = typeof message.message === "string" ? message.message : JSON.stringify(message.message);
+          console.log(message);
           return (
-            <div ref={scrollRef} key={uuidv4()}>
+            <div 
+              ref={index === messages.length - 1 ? scrollRef : null} 
+              key={uuidv4()}
+            >
               <div className={`message ${message.fromSelf ? "sended" : "recieved"}`}>
                 <div className="content">
                   {!message.fromSelf && message.sender && (
                     <div className="user-details">
                       <img
-                        src={`data:image/svg+xml;base64,${message.sender.avatar}`}
+                        src={message.sender.avatar ? `data:image/svg+xml;base64,${message.sender.avatar}` : `data:image/svg+xml;base64,${message.sender.avatarImage}`}
                         alt="avatar"
                       />
                       <h4 className="username">{message.sender.username}</h4>
@@ -112,15 +118,41 @@ const Container = styled.div`
   background: linear-gradient(135deg, #1e566b, #112d38);
   border-radius: 1rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  height: 100%;
 
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     grid-template-rows: 15% 70% 15%;
   }
 
-  .user-details h4{
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #D3D3D3;
+  @media screen and (max-width: 720px) {
+    grid-template-rows: 10% 80% 10%;
+    border-radius: 0;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+  }
+
+  .user-details {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+
+    h4 {
+      margin: 0;
+      font-weight: bold;
+      color: #D3D3D3;
+      font-size: 0.9rem;
+    }
   }
 
   .chat-header {
@@ -132,10 +164,20 @@ const Container = styled.div`
     padding: 0 2rem;
     border-bottom: 2px solid #004c6d;
 
+    @media screen and (max-width: 720px) {
+      padding: 0 1rem;
+    }
+
     h1 {
       font-size: 1.5rem;
       font-weight: bold;
       text-transform: uppercase;
+      
+
+      @media screen and (max-width: 720px) {
+        font-size: 1.2rem;
+        padding-left: 100px;
+      }
     }
   }
 
@@ -147,6 +189,10 @@ const Container = styled.div`
     overflow: auto;
     background: #112d38;
     border-radius: 1rem;
+
+    @media screen and (max-width: 720px) {
+      padding: 1rem;
+    }
 
     &::-webkit-scrollbar {
       width: 0.5rem;
@@ -161,7 +207,7 @@ const Container = styled.div`
       margin-bottom: 1rem;
 
       .content {
-        max-width: 60%;
+        max-width: 70%;
         overflow-wrap: break-word;
         padding: 1rem;
         border-radius: 1rem;
@@ -171,6 +217,12 @@ const Container = styled.div`
         font-family: 'Roboto', sans-serif;
         background: rgba(0, 140, 197, 0.8);
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+        @media screen and (max-width: 720px) {
+          max-width: 80%;
+          padding: 0.75rem;
+          font-size: 0.9rem;
+        }
       }
     }
 
@@ -187,43 +239,6 @@ const Container = styled.div`
       .content {
         background: #004c6d;
         align-items: flex-start;
-      }
-    }
-  }
-
-  .chat-input {
-    display: flex;
-    align-items: center;
-    padding: 0 2rem;
-    background-color: #0c3a4d;
-    border-top: 2px solid #004c6d;
-
-    input {
-      flex: 1;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      background: #e0f7ff;
-      color: #333;
-      margin-right: 1rem;
-      outline: none;
-      font-family: 'Roboto', sans-serif;
-      font-size: 1rem;
-    }
-
-    button {
-      background-color: #007ca6;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      color: #fff;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s;
-
-      &:hover {
-        background-color: #005a74;
       }
     }
   }

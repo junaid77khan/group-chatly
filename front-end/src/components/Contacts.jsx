@@ -9,11 +9,10 @@ export default function Contacts({ socket, currentUser }) {
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
   const [contacts, setContacts] = useState([]);
+  const [isSliderOpen, setIsSliderOpen] = useState(false);
 
   const fetchContacts = async () => {
     const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-    console.log(data);
-    
     setContacts(data.data);
   };
 
@@ -40,14 +39,25 @@ export default function Contacts({ socket, currentUser }) {
 
       return () => {
         socket.off("user-added", handleUserAdded);
+        socket.off("user-removed", handleUserRemoved);
       };
     }
   }, [socket, fetchContacts]);
 
+  const toggleSlider = () => {
+    setIsSliderOpen(!isSliderOpen);
+  };
+
   return (
     <>
+      <ToggleButton onClick={toggleSlider} $isOpen={isSliderOpen}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </ToggleButton>
+      
       {currentUserImage && currentUserName && (
-        <Container>
+        <Container $isOpen={isSliderOpen}>
           <div className="current-user">
             <div className="avatar">
               <img
@@ -67,6 +77,13 @@ export default function Contacts({ socket, currentUser }) {
                   (contact._id != currentUser._id && <div
                     key={contact._id}
                     className={`contact ${index === currentSelected ? "selected" : ""}`}
+                    onClick={() => {
+                      setCurrentSelected(index);
+                      // Close slider on mobile after selection
+                      if (window.innerWidth <= 720) {
+                        setIsSliderOpen(false);
+                      }
+                    }}
                   >
                     <div className="avatar">
                       <img
@@ -94,6 +111,53 @@ export default function Contacts({ socket, currentUser }) {
   );
 }
 
+const ToggleButton = styled.button`
+  display: none;
+  
+  @media screen and (max-width: 720px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1001;
+    width: 40px;
+    height: 40px;
+    background-color: #00b4db;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: left 0.3s ease-in-out, background-color 0.3s ease;
+    left: ${props => props.$isOpen ? '70%' : '15px'};
+    transform: ${props => props.$isOpen ? 'translateX(-50%)' : 'translateX(0)'};
+
+    span {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 3px 0;
+      transition: all 0.3s ease;
+      transform-origin: left;
+
+      &:nth-child(1) {
+        transform: ${props => props.$isOpen ? 'rotate(45deg)' : 'rotate(0)'};
+      }
+      &:nth-child(2) {
+        opacity: ${props => props.$isOpen ? '0' : '1'};
+      }
+      &:nth-child(3) {
+        transform: ${props => props.$isOpen ? 'rotate(-45deg)' : 'rotate(0)'};
+      }
+    }
+
+    &:hover {
+      background-color: #0083b0;
+    }
+  }
+`;
+
 const Container = styled.div`
   display: grid;
   grid-template-rows: 15% 70% 15%;
@@ -101,6 +165,17 @@ const Container = styled.div`
   background: linear-gradient(135deg, #00b4db, #0083b0);
   box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3);
 
+  @media screen and (max-width: 720px) {
+    position: fixed;
+    top: 0;
+    left: ${props => props.$isOpen ? '0' : '-100%'};
+    width: 80%;
+    height: 100%;
+    z-index: 1000;
+    transition: left 0.3s ease-in-out;
+  }
+
+  /* Rest of the existing styles remain the same */
   .brand {
     display: flex;
     align-items: center;
