@@ -55,7 +55,7 @@ export default function Contacts({ socket, currentUser }) {
         <span></span>
         <span></span>
       </ToggleButton>
-      
+
       {currentUserImage && currentUserName && (
         <Container $isOpen={isSliderOpen}>
           <div className="current-user">
@@ -74,27 +74,29 @@ export default function Contacts({ socket, currentUser }) {
             {(Array.isArray(contacts) && contacts.length > 0) ? (
               contacts.map((contact, index) => {
                 return (
-                  (contact._id != currentUser._id && <div
-                    key={contact._id}
-                    className={`contact ${index === currentSelected ? "selected" : ""}`}
-                    onClick={() => {
-                      setCurrentSelected(index);
-                      // Close slider on mobile after selection
-                      if (window.innerWidth <= 720) {
-                        setIsSliderOpen(false);
-                      }
-                    }}
-                  >
-                    <div className="avatar">
-                      <img
-                        src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-                        alt=""
-                      />
+                  (contact._id !== currentUser._id && (
+                    <div
+                      key={contact._id}
+                      className={`contact ${index === currentSelected ? "selected" : ""}`}
+                      onClick={() => {
+                        setCurrentSelected(index);
+                        // Close slider on mobile after selection
+                        if (window.innerWidth <= 720) {
+                          setIsSliderOpen(false);
+                        }
+                      }}
+                    >
+                      <div className="avatar">
+                        <img
+                          src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+                          alt=""
+                        />
+                      </div>
+                      <div className="username">
+                        <h3>{contact.username}</h3>
+                      </div>
                     </div>
-                    <div className="username">
-                      <h3>{contact.username}</h3>
-                    </div>
-                  </div>)
+                  ))
                 );
               })
             ) : (
@@ -123,21 +125,21 @@ const ToggleButton = styled.button`
     top: 15px;
     left: 15px;
     z-index: 1001;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     background-color: #00b4db;
     border: none;
-    border-radius: 5px;
+    border-radius: 50%;
     cursor: pointer;
     transition: left 0.3s ease-in-out, background-color 0.3s ease;
     left: ${props => props.$isOpen ? '70%' : '15px'};
     transform: ${props => props.$isOpen ? 'translateX(-50%)' : 'translateX(0)'};
 
     span {
-      width: 25px;
+      width: 30px;
       height: 3px;
       background-color: white;
-      margin: 3px 0;
+      margin: 4px 0;
       transition: all 0.3s ease;
       transform-origin: left;
 
@@ -162,7 +164,7 @@ const Container = styled.div`
   display: grid;
   grid-template-rows: 15% 70% 15%;
   overflow: hidden;
-  background: linear-gradient(135deg, #00b4db, #0083b0);
+  background: linear-gradient(135deg, #0083b0, #005f80);
   box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3);
 
   @media screen and (max-width: 720px) {
@@ -182,14 +184,15 @@ const Container = styled.div`
     gap: 1rem;
     justify-content: center;
     img {
-      height: 2.5rem;
+      height: 3rem;
     }
     h3 {
       color: white;
       text-transform: uppercase;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       letter-spacing: 2px;
       font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
     }
   }
 
@@ -208,6 +211,12 @@ const Container = styled.div`
         border-radius: 0.5rem;
       }
     }
+     h1 {
+      color: white;
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
 
     .contact {
       background-color: rgba(255, 255, 255, 0.2);
@@ -221,11 +230,13 @@ const Container = styled.div`
       align-items: center;
       transition: 0.3s ease-in-out;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
 
       .avatar img {
         height: 3rem;
         border-radius: 50%;
         border: 2px solid white;
+        transition: transform 0.2s ease;
       }
 
       .username h3 {
@@ -236,13 +247,13 @@ const Container = styled.div`
 
       &:hover {
         transform: scale(1.05);
-        background-color: #0073a6;
+        background-color: rgba(0, 115, 166, 0.8);
       }
-    }
 
-    .selected {
-      background-color: #0073a6;
-      transform: scale(1.05);
+      .selected {
+        background-color: rgba(0, 115, 166, 0.8);
+        transform: scale(1.05);
+      }
     }
 
     p {
@@ -260,11 +271,13 @@ const Container = styled.div`
     align-items: center;
     gap: 1rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid white;
 
     .avatar img {
       height: 4rem;
       border-radius: 50%;
       border: 2px solid white;
+      transition: transform 0.2s ease;
     }
 
     .username h2 {
@@ -275,9 +288,7 @@ const Container = styled.div`
 
     @media screen and (min-width: 720px) and (max-width: 1080px) {
       gap: 0.5rem;
-      .username h2 {
-        font-size: 1rem;
-      }
     }
   }
 `;
+
