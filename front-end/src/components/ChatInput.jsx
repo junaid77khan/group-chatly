@@ -156,9 +156,9 @@ const Container = styled.div`
     }
 
     button {
-      position: absolute;
-      right: 0rem;
-      top: 50%;
+      position: sticky;
+      bottom: 0;
+      z-index: 100;
       transform: translateY(-50%);
       display: flex;
       justify-content: center;
