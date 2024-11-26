@@ -7,6 +7,7 @@ import Picker from "emoji-picker-react";
 export default function ChatInput({ handleSendMsg }) {
   const [msg, setMsg] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
   const handleEmojiPickerhideShow = () => {
     setShowEmojiPicker(!showEmojiPicker);
   };
@@ -36,7 +37,7 @@ export default function ChatInput({ handleSendMsg }) {
       <form className="input-container" onSubmit={(event) => sendChat(event)}>
         <input
           type="text"
-          placeholder="Message"
+          placeholder="Type your message..."
           onChange={(e) => setMsg(e.target.value)}
           value={msg}
         />
@@ -51,22 +52,30 @@ export default function ChatInput({ handleSendMsg }) {
 const Container = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: 10% 90%; /* Adjust for more space for emoji and button */
+  grid-template-columns: 10% 90%;
   background-color: #008cc5;
   padding: 0 2rem;
+
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     padding: 0 1rem;
     gap: 1rem;
   }
 
   @media screen and (max-width: 720px) {
-    grid-template-columns: 15% 85%; /* More space for the input */
+    grid-template-columns: 15% 85%;
     padding: 0 1rem;
+  }
+
+  @media screen and (max-width: 480px) {
+    position: fixed;
+    bottom: 5px;
+    padding: 5px 1rem;
+    width: 100%;
   }
 
   .button-container {
     display: flex;
-    align-items: center;
+    align-items: left;
     color: white;
     gap: 1rem;
 
@@ -114,21 +123,28 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
-    background-color: #fff;
+    background: linear-gradient(to right, #ffffff, #e0f7fa);
+    padding: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
     input {
       flex-grow: 1;
       height: 100%;
       background-color: transparent;
-      color: black;
+      color: #333;
       border: none;
       padding-left: 1rem;
       font-size: 1.2rem;
-      &::selection {
-        background-color: #9a86f3;
-      }
+      border-radius: 1.5rem;
+      outline: none;
+      transition: all 0.3s ease-in-out;
+
       &:focus {
-        outline: none;
+      }
+
+      &::placeholder {
+        color: #999;
+        font-style: italic;
       }
 
       @media screen and (max-width: 720px) {
@@ -137,24 +153,23 @@ const Container = styled.div`
     }
 
     button {
-      padding: 0.3rem 2rem;
+      padding: 0.5rem 1rem;
       border-radius: 2rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #1e566b;
+      background: linear-gradient(to right, #008cc5, #1e566b);
       border: none;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
 
-      @media screen and (min-width: 720px) and (max-width: 1080px) {
-        padding: 0.3rem 1rem;
-        svg {
-          font-size: 1rem;
-        }
+      &:hover {
+        transform: scale(1.1);
       }
 
       svg {
-        font-size: 2rem;
-        color: white;
+        font-size: 1.5rem;
       }
     }
   }
