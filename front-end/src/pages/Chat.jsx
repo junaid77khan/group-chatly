@@ -43,10 +43,10 @@ export default function Chat() {
             <ChatContainer socket={socket.current} />
           </>
         ) : (
-          <>
-            <Contacts socket={socket.current} currentUser={curUser} />
-            <ChatContainer socket={socket.current} />
-          </>
+          <div className="loader">
+            <img src={loader} alt="loading" className="loader-img" />
+            <h2>Loading Environment</h2>
+          </div>
         )}
       </div>
     </Container>
