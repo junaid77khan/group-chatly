@@ -25,13 +25,13 @@ The Group-Chatly application consists of two main components:
 
 2. **Client**:
    - **Socket Connection**: Establishes a socket connection to the server using **Socket.io** to enable real-time communication.
-   - **User Interface**: Provides a modern, interactive user interface built with **React**, replacing the traditional text-based interface. This interface allows users to send and receive messages in a dynamic and user-friendly environment.
-   - **Real-Time Message Display**: Displays real-time messages sent by other users in the chatroom as soon as they are broadcasted by the server. The **React** interface ensures smooth updates without page reloads, providing a dynamic user experience.
+   - **User Interface**: Provides a modern, interactive user interface built with **HTML, CSS, Javascript, React**, replacing the traditional text-based interface. This interface allows users to send and receive messages in a dynamic and user-friendly environment.
+   - **Real-Time Message Display**: Displays real-time messages sent by other users in the chatroom as soon as they are broadcasted by the server. This interface ensures smooth updates without page reloads, providing a dynamic user experience.
   
 ## Assumptions 
 ### 1) Design Choice
 
-   The user interface was implemented using **React** to provide a modern and intuitive chatting experience. While the requirement initially suggested a text-based interface (e.g., terminal-based), React was chosen to:
+   The user interface was implemented using **HTML, CSS, Javascript, React** to provide a modern and intuitive chatting experience. While the requirement initially suggested a text-based interface (e.g., terminal-based), React was chosen to:
 
 - **Enhance usability** with a graphical interface, offering a more user-friendly and visually appealing experience.
 - **Allow scalability** for future enhancements, such as message formatting, making the app easier to expand.
