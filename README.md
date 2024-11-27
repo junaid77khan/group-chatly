@@ -4,6 +4,9 @@
 ## Live Link
 https://group-chatly.vercel.app
 
+## Video Link 
+https://www.loom.com/share/f6f439e786414e7b94152d2ff5b34a99
+
 ## Objective
 Group-Chatly is a real-time chat application that allows multiple clients to connect to a central server and participate in a shared chatroom. The application is built using **Node.js** and utilizes the standard socket library for communication.
 
