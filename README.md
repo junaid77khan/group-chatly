@@ -1,6 +1,9 @@
 
 # Group-Chatly Application 💬
 
+## Live Link
+https://group-chatly.vercel.app
+
 ## Objective
 Group-Chatly is a real-time chat application that allows multiple clients to connect to a central server and participate in a shared chatroom. The application is built using **Node.js** and utilizes the standard socket library for communication.
 
@@ -130,3 +133,61 @@ Clone the repository:
 ### 3. Accessing the Chat Application
   - Once both the backend and frontend are running, you can access the chat application at http://localhost:3000 in your browser.
   - Open the frontend in multiple browser tabs to simulate multiple users interacting with the chat.
+
+
+## Guidance on Accessing the Chat Application Once Deployed
+
+### 1. Accessing the Frontend Application
+
+Once your chat application is deployed to a hosting platform (such as **Netlify**, **Vercel**, **Heroku**, or any cloud provider), you can access the frontend application via the provided **URL**. 
+
+For example:
+- If deployed on **Netlify**, the URL might look like: `https://your-chat-app.netlify.app`
+- If deployed on **Vercel**, the URL might look like: `https://your-chat-app.vercel.app`
+
+Add the front-end url in index.js (Backend) to avoid CORS Error.
+
+### 2. Accessing the Backend Application
+
+The backend application should also be deployed to a cloud provider or hosting platform. Once deployed, the backend API can be accessed via the public URL of the server.
+
+For example:
+- If deployed on **Heroku**, the URL might look like: `https://your-chat-app-backend.herokuapp.com`
+- If using **AWS**, **Azure**, or **Google Cloud**, the URL might look like: `https://your-backend-url.com`
+
+Ensure that the frontend application is configured to make requests to the correct backend API URL.
+Add Backend URL in APIRoutes (In Utils Folder), to specify the server url in Frontend.
+
+### 3. How to Use the Chat Application
+
+Once both the **Frontend** and **Backend** are deployed, follow these steps to use the application:
+
+1. **Open the Chat Application**:
+   - Navigate to the deployed frontend URL (e.g., `https://your-chat-app.netlify.app`).
+   
+2. **Create an account**
+   
+3. **Join the Chatroom**:
+   - After this, You will be connected to the backend server, and a real-time chat interface will appear.
+
+4. **Send and Receive Messages**:
+   - You can send messages using the input box, and they will appear in the chatroom for all connected users. Messages are broadcasted to all users in real time.
+
+5. **Multiple Users**:
+   - Open the chat application in multiple tabs or devices to simulate multiple users. All connected users will be able to see the messages in real-time.
+
+### 4. Troubleshooting
+
+- **Backend Connection Issues**: If the frontend cannot connect to the backend (due to server downtime or misconfiguration), check the network status and ensure the backend URL is correctly configured in the frontend `.env` file.
+
+- **MongoDB Issues**: If you encounter database connection issues, ensure that the MongoDB instance is running and the correct URI is provided in the backend `.env` file.
+
+---
+
+### 5. Deployment Notes
+
+- Ensure that all environment variables (`MONGO_URL`, `REACT_APP_LOCALHOST_KEY`, etc.) are correctly set up in your deployment platforms.
+- If using services like **Heroku**, **AWS**, or **Google Cloud**, you may need to configure your environment variables in their respective dashboards or configuration files.
+
+---
+
