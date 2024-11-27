@@ -52,7 +52,7 @@ The server uses asynchronous patterns with `async/await` in Node.js to handle mu
 Clone the repository:
 
    ```bash
-   git clone https://github.com/your-repo
+   git clone https://github.com/junaid77khan/group-chatly.git
    ```
 ### 1. Backend Setup
 
