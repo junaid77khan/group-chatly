@@ -36,9 +36,12 @@ It is important to note that **React** was used solely for the user interface, w
 
 By leveraging React, the application ensures a smooth and user-friendly chat experience while maintaining the same functionality expected in a text-based interface.
 
-### 2) Authentication
-- **User Authentication**: Implemented user authentication to ensure secure access to the chat application. Users are required to sign up and log in before they can join the chatroom.
-- **Token-Based Authentication**: Utilizes JSON Web Tokens (JWT) for secure, stateless authentication. Upon successful login, a token is generated and stored to maintain the user's session.
+## 2) Authentication
+
+- **User Authentication**: Implemented user authentication to ensure secure access to the chat application. Users must sign up and log in before they can access the chatroom.
+
+- **Token-Based Authentication**: Utilizes JSON Web Tokens (JWT) for secure, stateless authentication. After a successful login or registration, a JWT token is generated and returned to the user. This token is used to verify the user's identity in subsequent requests, ensuring secure and seamless access without the need for repeated logins. The token is stored client-side (typically in local storage) and sent with each request to authenticate the user.
+
 - **Protected Routes**: Certain routes and functionalities are protected, ensuring that only authenticated users can access the chat features.
 
 ### 3) Concurrency Handling
