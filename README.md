@@ -26,15 +26,15 @@ The Group-Chatly application consists of two main components:
 ## Assumptions 
 ### 1) Design Choice
 
-The user interface was implemented using **React** to provide a modern and intuitive chatting experience. While the requirement initially suggested a text-based interface (e.g., terminal-based), React was chosen to:
+   The user interface was implemented using **React** to provide a modern and intuitive chatting experience. While the requirement initially suggested a text-based interface (e.g., terminal-based), React was chosen to:
 
 - **Enhance usability** with a graphical interface, offering a more user-friendly and visually appealing experience.
 - **Allow scalability** for future enhancements, such as message formatting, making the app easier to expand.
 - **Align with current industry standards** for building dynamic and interactive web applications, ensuring the app remains relevant and maintainable.
 
-It is important to note that **React** was used solely for the user interface, while the chat logic (e.g., message handling, broadcasting) was implemented using standard **Node.js** and **Socket.io**. No external libraries were used for the core chat logic, as per the project requirements.
-
-By leveraging React, the application ensures a smooth and user-friendly chat experience while maintaining the same functionality expected in a text-based interface.
+   It is important to note that **React** was used solely for the user interface, while the chat logic (e.g., message handling, broadcasting) was implemented using standard **Node.js** and **Socket.io**. No external libraries were used for the core chat logic, as per the project requirements.
+   
+   By leveraging React, the application ensures a smooth and user-friendly chat experience while maintaining the same functionality expected in a text-based interface.
 
 ## 2) Authentication
 
@@ -45,7 +45,7 @@ By leveraging React, the application ensures a smooth and user-friendly chat exp
 - **Protected Routes**: Certain routes and functionalities are protected, ensuring that only authenticated users can access the chat features.
 
 ### 3) Concurrency Handling
-The server uses asynchronous patterns with `async/await` in Node.js to handle multiple client connections concurrently. This ensures non-blocking I/O operations, enabling efficient communication even with multiple active clients.
+   The server uses asynchronous patterns with `async/await` in Node.js to handle multiple client connections concurrently. This ensures non-blocking I/O operations, enabling efficient communication even with multiple active clients.
 
 ### 4) Error Handling
 
