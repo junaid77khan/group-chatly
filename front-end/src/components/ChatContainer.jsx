@@ -80,7 +80,7 @@ export default function ChatContainer({ socket }) {
   return (
     <Container>
       <div className="chat-header">
-        <h1>Group Chat</h1>
+        <h1>ChatRoom</h1>
         <Logout socket={socket}/>
       </div>
       <div className="chat-messages">
