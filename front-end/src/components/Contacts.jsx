@@ -4,6 +4,7 @@ import Logo from "../assets/logo.svg";
 import { allUsersRoute } from "../utils/APIRoutes";
 import axios from "axios";
 
+// This component show all online users avaiable
 export default function Contacts({ socket, currentUser }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
@@ -34,6 +35,7 @@ export default function Contacts({ socket, currentUser }) {
         fetchContacts();
       };
 
+      // Evenets to handle online users list
       socket.on("user-added", handleUserAdded);
       socket.on("user-removed", handleUserRemoved);
 
@@ -71,7 +73,7 @@ export default function Contacts({ socket, currentUser }) {
           </div>
           <div className="contacts">
             <h1>Online users</h1>
-            {(Array.isArray(contacts) && contacts.length > 0) ? (
+            {(Array.isArray(contacts) && contacts.length > 1) ? (
               contacts.map((contact, index) => {
                 return (
                   (contact._id !== currentUser._id && (

@@ -41,9 +41,10 @@ module.exports.register = async (req, res, next) => {
   }
 };
 
+// We are maintaining a global.onlineUsers variable to track how many users are connected to our socket
 module.exports.getAllUsers = async (req, res, next) => {
   try {
-    const connectedUserIds = Array.from(global.onlineUsers.keys()); // Get the online user IDs
+    const connectedUserIds = Array.from(global.onlineUsers.keys()); 
 
     if (connectedUserIds.length === 0) {
       return res.json({ msg: "No users are currently online" });
@@ -55,6 +56,7 @@ module.exports.getAllUsers = async (req, res, next) => {
       "avatarImage",
       "_id",
     ]);
+    
 
     return res.json(users);
   } catch (ex) {

@@ -16,6 +16,7 @@ export default function Logout( { socket } ) {
       localStorage.clear();
       
       if (socket) {  
+        // In backend - this event will remove the user
         socket.disconnect();
       }
       

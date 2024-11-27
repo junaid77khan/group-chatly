@@ -1,6 +1,7 @@
 const Messages = require("../models/messageModel");
 const User = require("../models/userModel");
 
+// Controller to get all previous messages 
 module.exports.getMessages = async (req, res, next) => {
   try {
     const { from } = req.body;
@@ -15,7 +16,6 @@ module.exports.getMessages = async (req, res, next) => {
     }).sort({ createdAt: 1 });
 
     const projectedMessages = messages.map((msg) => {
-      // Add a safety check in case population fails
       if (!msg.sender) {
         return null;
       }
@@ -38,10 +38,12 @@ module.exports.getMessages = async (req, res, next) => {
   }
 };
 
+// For adding the message
 module.exports.addMessage = async (req, res, next) => {
   try {
     const { from, message } = req.body;
 
+    // Store sender of the message - to show messages left or right according to the user
     const data = await Messages.create({
       message: { text: message },  
       sender: from,              

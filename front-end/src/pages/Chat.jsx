@@ -7,12 +7,15 @@ import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import loader from "../assets/loader.gif"; // Import the loader gif
 
+// This is main component in which we have - chatContainer, chat-input and contacts
 export default function Chat() {
   const navigate = useNavigate();
   const socket = useRef();
   const [curUser, setCurUser] = useState(undefined);
   const [socketConnected, setSocketConnected] = useState(false);
 
+  // Check user is authenticated or not - otherwise navigate to login
+  // For authentication we are checking key in local storage, which is stored at the time of login
   useEffect(() => {
     const loadUser = async () => {
       if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
@@ -24,6 +27,7 @@ export default function Chat() {
     loadUser();
   }, [navigate]);
 
+  // After setting curUser, we will set some attributes in socket.
   useEffect(() => {
     if(curUser) {
       socket.current = io(host);
@@ -31,7 +35,7 @@ export default function Chat() {
       socket.current.on("user-added", () => {
         setSocketConnected(true);
       });
-    }
+    }    
   }, [curUser]);
 
   return (

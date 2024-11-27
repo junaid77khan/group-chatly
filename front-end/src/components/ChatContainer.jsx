@@ -6,12 +6,15 @@ import { v4 as uuidv4 } from "uuid";
 import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
 import axios from "axios";
 
+
+// This the whole components in which all msgs are visible
 export default function ChatContainer({ socket }) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
   useEffect(() => {
+    
     const fetchMessages = async () => {
       const data = await JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY));
   
@@ -28,7 +31,7 @@ export default function ChatContainer({ socket }) {
   
   const handleSendMsg = async (msg) => {
     const data = await JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY));
-    console.log(data);
+    // console.log(data);
     
     const messageData = {
       from: data,
@@ -39,6 +42,7 @@ export default function ChatContainer({ socket }) {
     
     await axios.post(sendMessageRoute, messageData);
 
+    // real time message updation - sender side
     const msgs = [...messages];
     msgs.push({ fromSelf: true, message: msg });
     setMessages(msgs);
@@ -54,6 +58,7 @@ export default function ChatContainer({ socket }) {
           sender: msg.from
         });
       };
+      // Recieve broadcast msg - time to update msgs list
       socket.on("msg-recieve", handleMessage);
   
       return () => {
@@ -81,7 +86,6 @@ export default function ChatContainer({ socket }) {
       <div className="chat-messages">
         {messages.map((message, index) => {
           const content = typeof message.message === "string" ? message.message : JSON.stringify(message.message);
-          console.log(message);
           return (
             <div 
               ref={index === messages.length - 1 ? scrollRef : null} 
