@@ -113,7 +113,7 @@ Clone the repository:
    
 3. Create a .env file in the root of the frontend directory and add the necessary configuration values:
 
-  Example .env file:
+     Example .env file:
   
      ```bash
     REACT_APP_LOCALHOST_KEY="chat-app-current-user"
@@ -121,9 +121,9 @@ Clone the repository:
 
 4. Start the frontend application:
    
-   ```bash
-   npm start
-   ```
+    ```bash
+    npm start
+    ```
    
    The application will be running on http://localhost:3000.
 
