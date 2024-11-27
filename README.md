@@ -137,6 +137,15 @@ Clone the repository:
   - Once both the backend and frontend are running, you can access the chat application at http://localhost:3000 in your browser.
   - Open the frontend in multiple browser tabs to simulate multiple users interacting with the chat.
 
+## Images 
+
+![image](https://github.com/user-attachments/assets/2d57b7af-3370-4094-8ba8-e5fb806131db)
+
+![image](https://github.com/user-attachments/assets/f292c187-d80e-4313-b9d1-e225e4b3b844)
+
+![image](https://github.com/user-attachments/assets/f83a1710-a391-481e-a360-0afd0a743df3)
+
+![image](https://github.com/user-attachments/assets/54404cff-cd49-426c-9564-7772bfefb327)
 
 ## Guidance on Accessing the Chat Application Once Deployed
 
