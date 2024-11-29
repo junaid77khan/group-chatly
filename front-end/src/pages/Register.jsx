@@ -211,7 +211,7 @@ const FormContainer = styled.div`
 
   .loader {
     border: 3px solid #f3f3f3;
-    border-top: 3px solid #ffffff;
+    border-top: 3px solid junaidk2;
     border-radius: 50%;
     width: 16px;
     height: 16px;
