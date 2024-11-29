@@ -22,6 +22,7 @@ export default function Register() {
     password: "",
     confirmPassword: "",
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
@@ -64,6 +65,7 @@ export default function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (handleValidation()) {
+      setLoading(true);
       const { email, username, password } = values;
       const { data } = await axios.post(registerRoute, {
         username,
@@ -81,6 +83,7 @@ export default function Register() {
         );
         navigate("/setAvatar");
       }
+      setLoading(false);
     }
   };
 
@@ -116,7 +119,9 @@ export default function Register() {
             name="confirmPassword"
             onChange={(e) => handleChange(e)}
           />
-          <button type="submit">Create Account</button>
+          <button type="submit" disabled={loading}>
+            {loading ? <span className="loader"></span> : "Create Account"}
+          </button>
           <span>
             Already have an account? <Link to="/login">Login.</Link>
           </span>
@@ -135,47 +140,48 @@ const FormContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  position: absolute;
-  z-index: -1;
   background: url('https://imgs.search.brave.com/cp3OEplyW_DQcyon3MO9ScspkCIK9sYgBBaudnapySs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvNzMz/MTU4MS5qcGc');
+  padding: 2rem 1rem;
 
-  
   .brand {
     display: flex;
     align-items: center;
     gap: 1rem;
     justify-content: center;
     img {
-      height: 5rem;
+      height: 4rem;
+      border-radius: 50%;
+      max-width: 100%;
     }
     h1 {
-      color: #fff;
-      font-weight: 3000;
+      color: #ffffff;
       text-transform: uppercase;
+      font-size: 2rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
   }
 
   form {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
     background-color: transparent;
-    border-radius: 2rem;
-    padding: 3rem 5rem;
-    max-width: 500px;
+    border-radius: 1.5rem;
+    padding: 3rem 2rem;
     width: 100%;
+    max-width: 400px;
   }
 
   input {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #ffffff;
     padding: 1rem;
-    border: 0.1rem solid #4015ff;
+    border: 1px solid #4015ff;
     border-radius: 1rem;
-    color: black;
+    color: #333;
     width: 100%;
     font-size: 1rem;
     &:focus {
-      border: 0.1rem solid #100;
+      border-color: #100;
       outline: none;
     }
   }
@@ -190,73 +196,46 @@ const FormContainer = styled.div`
     border-radius: 1rem;
     font-size: 1rem;
     text-transform: uppercase;
-    transition: 0.2s all ease;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      background-color: #4e0eff;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      background-color: #2e0ca6;
+    }
+  }
+
+  .loader {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #ffffff;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   span {
-    color: white;
+    color: #fff;
+    text-align: center;
     text-transform: uppercase;
+    font-size: 0.9rem;
     a {
       color: #4015ff;
       text-decoration: none;
       font-weight: bold;
-    }
-  }
-
-  /* Responsive styling */
-  @media (max-width: 768px) {
-    .brand {
-      gap: 0.5rem;
-      h1 {
-        font-size: 1.5rem;
-      }
-    }
-
-    form {
-      padding: 2rem 3rem;
-    }
-
-    input {
-      font-size: 0.9rem;
-    }
-
-    button {
-      font-size: 0.9rem;
-      padding: 0.8rem 1.5rem;
-    }
-
-    span {
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .brand {
-      gap: 0.2rem;
-      img {
-        height: 4rem;
-      }
-      h1 {
-        font-size: 1.2rem;
-      }
-    }
-
-    form {
-      padding: 1.5rem 2rem;
-    }
-
-    input {
-      font-size: 0.8rem;
-      padding: 0.8rem;
-    }
-
-    button {
-      font-size: 0.8rem;
-      padding: 0.8rem 1.2rem;
-    }
-
-    span {
-      font-size: 0.8rem;
     }
   }
 `;

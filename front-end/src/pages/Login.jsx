@@ -10,6 +10,7 @@ import { loginRoute } from "../utils/APIRoutes";
 export default function Login() {
   const navigate = useNavigate();
   const [values, setValues] = useState({ username: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -17,6 +18,7 @@ export default function Login() {
     draggable: true,
     theme: "dark",
   };
+
   useEffect(() => {
     if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
       navigate("/");
@@ -29,10 +31,7 @@ export default function Login() {
 
   const validateForm = () => {
     const { username, password } = values;
-    if (username === "") {
-      toast.error("Email and Password is required.", toastOptions);
-      return false;
-    } else if (password === "") {
+    if (username === "" || password === "") {
       toast.error("Email and Password is required.", toastOptions);
       return false;
     }
@@ -42,11 +41,9 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm()) {
+      setLoading(true);
       const { username, password } = values;
-      const { data } = await axios.post(loginRoute, {
-        username,
-        password,
-      });
+      const { data } = await axios.post(loginRoute, { username, password });
       if (data.status === false) {
         toast.error(data.msg, toastOptions);
       }
@@ -57,6 +54,7 @@ export default function Login() {
         );
         navigate("/");
       }
+      setLoading(false);
     }
   };
 
@@ -81,7 +79,9 @@ export default function Login() {
             name="password"
             onChange={(e) => handleChange(e)}
           />
-          <button type="submit">Log In</button>
+          <button type="submit" disabled={loading}>
+            {loading ? <span className="loader"></span> : "Log In"}
+          </button>
           <span>
             Don't have an account ? <Link to="/register">Register Now.</Link>
           </span>
@@ -101,7 +101,6 @@ const FormContainer = styled.div`
   gap: 1rem;
   align-items: center;
   background: url('https://imgs.search.brave.com/cp3OEplyW_DQcyon3MO9ScspkCIK9sYgBBaudnapySs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvNzMz/MTU4MS5qcGc');
- 
   padding: 2rem 1rem;
 
   .brand {
@@ -158,8 +157,33 @@ const FormContainer = styled.div`
     font-size: 1rem;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover {
       background-color: #4e0eff;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      background-color: #2e0ca6;
+    }
+  }
+
+  .loader {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #ffffff;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 
