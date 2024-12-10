@@ -1,4 +1,4 @@
-export const host = "https://group-chatly-server.onrender.com";
+export const host = "http://15.207.43.129";
 export const loginRoute = `${host}/api/auth/login`;
 export const registerRoute = `${host}/api/auth/register`;
 export const logoutRoute = `${host}/api/auth/logout`;
