@@ -22,6 +22,8 @@ The Group-Chatly application consists of two main components:
    - **Broadcasting**: Messages received from a client are broadcasted to all other connected clients in real time using **Socket.io**.
    - **Built with Node.js**: The server is implemented using **Node.js**, leveraging its event-driven, non-blocking I/O model to handle numerous client connections efficiently.
    - **Real-Time Communication with Socket.io**: **Socket.io** is used for real-time, bi-directional communication between the server and clients, enabling instant message delivery and updates.
+   - **Deployment**: Backend deployed on AWS EC2 for high availability.
+   - **Custom-Domain**: Accessible at https://chatly.work.gd.
 
 2. **Client**:
    - **Socket Connection**: Establishes a socket connection to the server using **Socket.io** to enable real-time communication.
@@ -151,6 +153,20 @@ Clone the repository:
 ![image](https://github.com/user-attachments/assets/f83a1710-a391-481e-a360-0afd0a743df3)
 
 ![image](https://github.com/user-attachments/assets/54404cff-cd49-426c-9564-7772bfefb327)
+
+---
+
+## Deployment Details
+
+### 🌐 Deployment
+- **Frontend**: Hosted on **Vercel** for seamless and fast deployments with a global CDN.  
+- **Backend**: Deployed on **AWS EC2**, ensuring high availability and scalability.  
+
+### ⚙️ Domain Configuration
+- The backend server is accessible via [https://chatly.work.gd](https://chatly.work.gd).  
+- Proper CORS (Cross-Origin Resource Sharing) policies are configured to allow requests from the frontend, ensuring smooth communication between client and server.
+
+---
 
 ## Guidance on Accessing the Chat Application Once Deployed
 
