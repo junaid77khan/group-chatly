@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
     "build": "echo 'No build process needed for plain Node.js projects' && exit 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
