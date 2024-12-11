@@ -60,6 +60,17 @@ The Group-Chatly application consists of two main components:
 
 ---
 
+## Run Project Using Docker Compose File 
+
+ - Docker Compose file is attached. Frontend and Backend has separate docker images.
+ - First Download the docker-compose.yml file.
+ - To run Docker Compose file -
+   
+   ```bash
+   docker-compose up --build
+   ```
+---
+
 ## Instructions to Run the Chat Application
 
 Clone the repository:
@@ -143,6 +154,8 @@ Clone the repository:
 ### 3. Accessing the Chat Application
   - Once both the backend and frontend are running, you can access the chat application at http://localhost:3000 in your browser.
   - Open the frontend in multiple browser tabs to simulate multiple users interacting with the chat.
+
+---
 
 ## Images 
 
