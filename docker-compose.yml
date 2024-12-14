@@ -1,13 +1,15 @@
 services:
   front-end:
-    image: junaid777khan/group-chatly-frontend
+    image: junaid777khan/group-chatly-frontend-optimized
     ports:
-      - "3000:3000"
+      - "3000:80"
     depends_on:
       - back-end
-    environment:
-      REACT_APP_SERVER_URL: http://localhost:5000
-      REACT_APP_LOCALHOST_KEY: chat-app-current-user
+    build:
+      context: ./front-end
+      args:
+        REACT_APP_SERVER_URL: http://localhost:5000
+        REACT_APP_LOCALHOST_KEY: chat-app-current-user
 
   back-end:
     image: junaid777khan/group-chatly-backend
@@ -16,3 +18,5 @@ services:
     environment:
       PORT: 5000
       MONGO_URL: mongodb+srv://jk387520:9PB3nCLCDqViLwBM@cluster0.sfnbfno.mongodb.net/chatly
+
+

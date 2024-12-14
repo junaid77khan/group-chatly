@@ -1,13 +1,35 @@
-FROM node:18-alpine
+# Step 1: Build stage
+FROM node:18-alpine AS builder
 
+# Set working directory
 WORKDIR /app
 
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
+# Copy source files
 COPY . .
 
-EXPOSE 3000
+# Inject environment variables into the build process
+ARG REACT_APP_SERVER_URL
+ARG REACT_APP_LOCALHOST_KEY
+ENV REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL
+ENV REACT_APP_LOCALHOST_KEY=$REACT_APP_LOCALHOST_KEY
 
-CMD ["npm", "start"]
+# Build the application
+RUN npm run build
+
+# Step 2: Serve stage
+FROM nginx:alpine AS runner
+
+# Copy built files to NGINX's default public directory
+COPY --from=builder /app/build /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start NGINX
+CMD ["nginx", "-g", "daemon off;"]
